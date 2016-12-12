@@ -25,8 +25,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
+app.use(validateContentType);
+app.use(addFailedAuthHeader);
+
+function validateContentType(req, res, next) {
+  var methods = ['PUT', 'PATCH', 'POST'];
+  // if the req is either PUT, PATCH, or POST, and has a body that is not empty, and does has Content-Type header in application/json, then...
+  if(methods.indexOf(req.method) !== -1 &&
+    Object.keys(req.body).length !== 0 &&
+    !req.is('json')
+  ) {
+    var message = 'Content-Type header must be application/json.';
+    res.status(400).json(message);
+  } else {
+    next();
+  }
+}
+
+function addFailedAuthHeader(err, req, res, next) {
+  var header = {'WWW-Authenticate': 'Bearer'};
+  if(err.status === 401) {
+    if(err.realm) {
+      header['WWW-Authenticate'] += `realm="${err.realm}"`;
+      res.set(header);
+    }
+  }
+  next(err);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,7 +74,7 @@ if (app.get('env') === 'development') {
 }
 
 // production error handlers
-app.user(function(err, req, res, next) {
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({
     message: err.message,

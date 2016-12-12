@@ -12,7 +12,9 @@
     "dotenv": "^2.0.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
+    "method-override": "^2.3.7",
     "mongoose": "^4.7.2",
+    "mongoose-bcrypt": "^1.4.2",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0"
   }
