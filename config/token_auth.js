@@ -1,12 +1,12 @@
 var jwt = require('jsonwebtoken');
 
- var User = require('../models/user');
+var User = require('../models/user');
 
- module.exports = {
-   create:       create,
-   refresh:      refresh,
-   authenticate: authenticate
- };
+module.exports = {
+ create:       create,
+ refresh:      refresh,
+ authenticate: authenticate
+};
 
  // ************************** TOKEN STRUCTURE **************************
 
@@ -42,6 +42,7 @@ var jwt = require('jsonwebtoken');
   *     - The response body contains the token that was generated.
   */
  function create(req, res, next) {
+   console.log(req.body);
    if (!req.body.email || !req.body.password) {
      var message = 'Missing required fields: email and password';
      return res.status(422).json(message);

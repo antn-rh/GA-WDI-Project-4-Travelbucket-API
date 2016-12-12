@@ -12,7 +12,7 @@ userSchema.plugin(require('mongoose-bcrypt'));
 // Add a "transformation" to the model's toJson function that stops the password field (even in digest format) from being returned in any response
 userSchema.options.toJSON = {
   transform: function(document, returnedObject, options) {
-    delete retruendObject.password;
+    delete returnedObject.password;
     return returnedObject;
   }
 }

@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var usersController = require('../controllers/users')
+var usersController = require('../controllers/users');
+var token = require('./token_auth');
 
 /* GET home page. */
 // API Documentation Landing Page
