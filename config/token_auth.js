@@ -5,7 +5,8 @@ var User = require('../models/user');
 module.exports = {
  create:       create,
  refresh:      refresh,
- authenticate: authenticate
+ authenticate: authenticate,
+ generateJwt: generateJwt
 };
 
 // ************************** TOKEN STRUCTURE **************************

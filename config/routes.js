@@ -16,5 +16,7 @@ router.route('/api/token')
   .post(token.create)
 router.route('/api/me')
   .get(token.authenticate, usersController.me)
+router.route('/auth/google')
+  .post(usersController.google)
 
 module.exports = router;
