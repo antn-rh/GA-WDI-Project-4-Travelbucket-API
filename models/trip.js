@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema({
-  createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+var tripSchema = new mongoose.Schema({
+  createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   location: String,
   startDate: Date,
   endDate: Date,
@@ -12,3 +12,7 @@ var userSchema = new mongoose.Schema({
   lodgingAddress: String,
   bookmarks: []
 });
+
+var Trip = mongoose.model('Trip', tripSchema);
+
+module.exports = Trip;
