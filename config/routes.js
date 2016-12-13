@@ -13,16 +13,21 @@ router.get('/', function(req, res, next) {
 
 // Authenticating users, includes Google OAuth2
 router.route('/api/users')
-  .post(usersController.create)
+  .post(usersController.create);
 router.route('/api/token')
-  .post(token.create)
+  .post(token.create);
 router.route('/api/me')
-  .get(token.authenticate, usersController.me)
+  .get(token.authenticate, usersController.me);
 router.route('/auth/google')
-  .post(usersController.google)
+  .post(usersController.google);
 
 // Trip routes
 router.route('/api/trips')
-  .get()
+  .get(tripsController.index)
+  .post(tripsController.create);
+router.route('/api/trips/:id')
+  .get(tripsController.show)
+  .patch(tripsController.update)
+  .delete(tripsController.destroy)
 
 module.exports = router;
