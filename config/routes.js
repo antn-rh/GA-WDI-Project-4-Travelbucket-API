@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var usersController = require('../controllers/users');
+var tripsController = require('../controllers/trips')
 var token = require('./token_auth');
 
 /* GET home page. */
@@ -10,6 +11,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Travelbucket' });
 });
 
+// Authenticating users, includes Google OAuth2
 router.route('/api/users')
   .post(usersController.create)
 router.route('/api/token')
@@ -18,5 +20,9 @@ router.route('/api/me')
   .get(token.authenticate, usersController.me)
 router.route('/auth/google')
   .post(usersController.google)
+
+// Trip routes
+router.route('/api/trips')
+  .get()
 
 module.exports = router;
