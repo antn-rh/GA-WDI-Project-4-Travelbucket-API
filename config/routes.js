@@ -28,6 +28,6 @@ router.route('/api/trips')
 router.route('/api/trips/:id')
   .get(tripsController.show)
   .patch(tripsController.update)
-  .delete(tripsController.destroy)
+  .delete(tripsController.destroy);
 
 module.exports = router;
