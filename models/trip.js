@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var flightSchema = new mongoose.Schema({
-  flightOrigin: String,
-  flightDestination: String,
-  flightDepartureTime: String,
-  flightDuration: String
+  origin: String,
+  destination: String,
+  departureTime: String,
+  duration: String
 });
 
 var tripSchema = new mongoose.Schema({

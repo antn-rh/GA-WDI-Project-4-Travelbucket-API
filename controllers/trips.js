@@ -45,14 +45,14 @@ function update(req, res, next) {
     trip.location = req.body.location;
     trip.startDate = req.body.startDate;
     trip.endDate = req.body.endDate;
-    trip.departingFlight.flightOrigin = req.body.departingFlight.flightOrigin;
-    trip.departingFlight.flightDestination = req.body.departingFlight.flightDestination;
-    trip.departingFlight.flightDepartureTime = req.body.departingFlight.flightDepartureTime;
-    trip.departingFlight.flightDuration = req.body.departingFlight.flightDuration;
-    trip.returnFlight.flightOrigin = req.body.returnFlight.flightOrigin;
-    trip.returnFlight.flightDestination = req.body.returnFlight.flightDestination;
-    trip.returnFlight.flightDepartureTime = req.body.returnFlight.flightDepartureTime;
-    trip.returnFlight.flightDuration = req.body.returnFlight.flightDuration;
+    trip.departingFlight.origin = req.body.departingFlight.origin;
+    trip.departingFlight.destination = req.body.departingFlight.destination;
+    trip.departingFlight.departureTime = req.body.departingFlight.departureTime;
+    trip.departingFlight.duration = req.body.departingFlight.duration;
+    trip.returnFlight.origin = req.body.returnFlight.origin;
+    trip.returnFlight.destination = req.body.returnFlight.destination;
+    trip.returnFlight.departureTime = req.body.returnFlight.departureTime;
+    trip.returnFlight.duration = req.body.returnFlight.duration;
     trip.lodgingAddress = req.body.lodgingAddress;
     trip.bookmarks = req.body.bookmarks;
 
