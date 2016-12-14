@@ -18,6 +18,7 @@ function index(req, res, next) {
 
 function create(req, res, next) {
   var trip = new Trip(req.body);
+  trip.createdBy = req.decoded._id;
 
   trip.save(function(err, savedTrip) {
     if(err) next(err);

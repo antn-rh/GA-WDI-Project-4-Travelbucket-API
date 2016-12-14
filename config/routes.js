@@ -23,11 +23,11 @@ router.route('/auth/google')
 
 // Trip routes
 router.route('/api/trips')
-  .get(tripsController.index)
-  .post(tripsController.create);
+  .get(token.authenticate, tripsController.index)
+  .post(token.authenticate, tripsController.create);
 router.route('/api/trips/:id')
-  .get(tripsController.show)
-  .patch(tripsController.update)
-  .delete(tripsController.destroy);
+  .get(token.authenticate, tripsController.show)
+  .patch(token.authenticate, tripsController.update)
+  .delete(token.authenticate, tripsController.destroy);
 
 module.exports = router;
