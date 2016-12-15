@@ -1,4 +1,5 @@
 var Trip = require('../models/trip');
+var NodeGeocoder = require('node-geocoder');
 
 module.exports = {
   index: index,
@@ -7,6 +8,15 @@ module.exports = {
   update: update,
   destroy: destroy
 }
+
+var options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GOOGLE_MAPS_KEY,
+  formatter: null
+};
+
+var geocoder = NodeGeocoder(options);
 
 function index(req, res, next) {
   Trip.find({}, function(err, trips) {
@@ -20,10 +30,16 @@ function create(req, res, next) {
   var trip = new Trip(req.body);
   trip.createdBy = req.decoded._id;
 
-  trip.save(function(err, savedTrip) {
-    if(err) next(err);
+  geocoder.geocode(trip.location, function(err, data) {
+    trip.latitude = data[0].latitude;
+    trip.longitude = data[0].longitude;
+    console.log(trip.latitude);
+    console.log(trip.longitude);
+    trip.save(function(err, savedTrip) {
+      if(err) next(err);
 
-    res.json(savedTrip);
+      res.json(savedTrip);
+    });
   });
 }
 

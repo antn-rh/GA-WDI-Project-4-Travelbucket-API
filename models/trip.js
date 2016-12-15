@@ -9,6 +9,8 @@ var flightSchema = new mongoose.Schema({
 
 var tripSchema = new mongoose.Schema({
   createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  latitude: Number,
+  longitude: Number,
   location: String,
   startDate: Date,
   endDate: Date,
