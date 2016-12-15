@@ -1,12 +1,14 @@
 var Trip = require('../models/trip');
 var NodeGeocoder = require('node-geocoder');
+var request = require('request');
 
 module.exports = {
   index: index,
   create: create,
   show: show,
   update: update,
-  destroy: destroy
+  destroy: destroy,
+  getYelp: getYelp
 }
 
 var options = {
@@ -88,5 +90,22 @@ function destroy(req, res, next) {
     if(err) next(err);
 
     res.json({message: 'Trip successfully deleted.'});
+  });
+}
+
+function getYelp(req, res) {
+  var searchTerm = req.body.searchTerm;
+  var latitude = req.body.latitude;
+  var longitude = req.body.longitude;
+  var url = 'https://api.yelp.com/v3/businesses/search?term=' + searchTerm + '&latitude=' + latitude + '&longitude=' + longitude;
+
+  request.get(url, {
+    headers: {
+      'Authorization': 'Bearer Vn0NavY8VIp6fySwq2HbX4Oa5bOVaD1hUpPGvUDgQav5utoqZ31wtIofBiU-AqgXTGECcj7U4q833e7piQjcP0_h47L5gcmLciGm0vp62JgblxC4vyJKWMwuMeBSWHYx'
+    }
+  }, function(err, response, body) {
+    if(err) console.log(err);
+
+    res.json(JSON.parse(body));
   });
 }

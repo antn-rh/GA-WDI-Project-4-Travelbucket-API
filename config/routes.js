@@ -30,4 +30,7 @@ router.route('/api/trips/:id')
   .patch(token.authenticate, tripsController.update)
   .delete(token.authenticate, tripsController.destroy);
 
+router.route('/api/yelp')
+  .post(tripsController.getYelp);
+
 module.exports = router;
