@@ -20,6 +20,7 @@
     "mongoose": "^4.7.2",
     "mongoose-bcrypt": "^1.4.2",
     "morgan": "~1.7.0",
+    "node-geocoder": "^3.15.1",
     "serve-favicon": "^2.3.2"
   }
 }
