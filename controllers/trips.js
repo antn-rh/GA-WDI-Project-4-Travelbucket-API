@@ -32,7 +32,7 @@ function create(req, res, next) {
   var trip = new Trip(req.body);
   trip.createdBy = req.decoded._id;
 
-  geocoder.geocode(trip.location, function(err, data) {
+  geocoder.geocode(trip.city + trip.state, function(err, data) {
     trip.latitude = data[0].latitude;
     trip.longitude = data[0].longitude;
     console.log(trip.latitude);
@@ -61,7 +61,8 @@ function update(req, res, next) {
   Trip.findById(id, function(err, trip) {
     if(err) next(err);
 
-    trip.location = req.body.location;
+    trip.city = req.body.city;
+    trip.state = req.body.state;
     trip.startDate = req.body.startDate;
     trip.endDate = req.body.endDate;
     trip.departingFlight.origin = req.body.departingFlight.origin;
