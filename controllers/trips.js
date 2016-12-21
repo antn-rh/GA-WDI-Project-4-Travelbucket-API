@@ -32,7 +32,7 @@ function create(req, res, next) {
   var trip = new Trip(req.body);
   trip.createdBy = req.decoded._id;
 
-  geocoder.geocode(trip.city + trip.state, function(err, data) {
+  geocoder.geocode(trip.city + ' ' + trip.state, function(err, data) {
     trip.latitude = data[0].latitude;
     trip.longitude = data[0].longitude;
     console.log(trip.latitude);
@@ -75,11 +75,17 @@ function update(req, res, next) {
     trip.returnFlight.duration = req.body.returnFlight.duration;
     trip.lodgingAddress = req.body.lodgingAddress;
     trip.bookmarks = req.body.bookmarks;
+    geocoder.geocode(req.body.city + ' ' + req.body.state, function(err, data) {
+      if(err) throw err;
+      trip.latitude = data[0].latitude;
+      trip.longitude = data[0].longitude;
+      // the trip.save must go inside geocoder otherwise the new values for latitude and longitude do not save
+      trip.save(function(err, updatedTrip) {
+        if(err) next(err);
 
-    trip.save(function(err, updatedTrip) {
-      if(err) next(err);
-
-      res.json(updatedTrip);
+        res.json(updatedTrip);
+        console.log('my updated trip: ' + updatedTrip.latitude + ' ' + updatedTrip.longitude)
+      });
     });
   });
 }
