@@ -63,6 +63,13 @@ function update(req, res, next) {
 
     trip.city = req.body.city;
     trip.state = req.body.state;
+    geocoder.geocode(req.body.city + ' ' + req.body.state, function(err, data) {
+      if(err) throw err;
+      trip.latitude = data[0].latitude;
+      trip.longitude = data[0].longitude;
+      console.log('geocoder latitude and longitude: ' + data[0].latitude + ' ' + data[0].longitude);
+      // trip.save(function(savedCoordinates) {})
+    });
     trip.startDate = req.body.startDate;
     trip.endDate = req.body.endDate;
     trip.departingFlight.origin = req.body.departingFlight.origin;
@@ -75,17 +82,12 @@ function update(req, res, next) {
     trip.returnFlight.duration = req.body.returnFlight.duration;
     trip.lodgingAddress = req.body.lodgingAddress;
     trip.bookmarks = req.body.bookmarks;
-    geocoder.geocode(req.body.city + ' ' + req.body.state, function(err, data) {
-      if(err) throw err;
-      trip.latitude = data[0].latitude;
-      trip.longitude = data[0].longitude;
-      // the trip.save must go inside geocoder otherwise the new values for latitude and longitude do not save
-      trip.save(function(err, updatedTrip) {
-        if(err) next(err);
 
-        res.json(updatedTrip);
-        console.log('my updated trip: ' + updatedTrip.latitude + ' ' + updatedTrip.longitude)
-      });
+    trip.save(function(err, updatedTrip) {
+      if(err) next(err);
+
+      res.json(updatedTrip);
+      console.log('my updated trip: ' + updatedTrip.latitude + ' ' + updatedTrip.longitude)
     });
   });
 }
